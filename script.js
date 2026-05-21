@@ -93,6 +93,17 @@ function setupCarousel(carousel, index) {
   const nextButton = createElement("button", "friend-carousel__button", ">");
   const counter = createElement("span", "friend-carousel__counter");
   const controls = createElement("div", "friend-carousel__controls");
+  const dots = createElement("div", "friend-carousel__dots");
+  const dotButtons = slides.map((_, slideIndex) => {
+    const dot = createElement("button", "friend-carousel__dot");
+    dot.type = "button";
+    dot.setAttribute("aria-label", `Ir para foto ${slideIndex + 1} de ${friendName}`);
+    dot.addEventListener("click", () => {
+      currentSlide = slideIndex;
+      updateCarousel();
+    });
+    return dot;
+  });
 
   previousButton.type = "button";
   previousButton.setAttribute("aria-label", `Foto anterior de ${friendName}`);
@@ -102,6 +113,10 @@ function setupCarousel(carousel, index) {
   function updateCarousel() {
     track.style.transform = `translateX(-${currentSlide * 100}%)`;
     counter.textContent = `${currentSlide + 1} / ${slides.length}`;
+    dotButtons.forEach((dot, slideIndex) => {
+      dot.classList.toggle("is-active", slideIndex === currentSlide);
+      dot.setAttribute("aria-current", slideIndex === currentSlide ? "true" : "false");
+    });
   }
 
   previousButton.addEventListener("click", () => {
@@ -114,7 +129,8 @@ function setupCarousel(carousel, index) {
     updateCarousel();
   });
 
-  controls.append(previousButton, counter, nextButton);
+  dots.append(...dotButtons);
+  controls.append(previousButton, counter, nextButton, dots);
   carousel.append(controls);
   carousel.dataset.carousel = String(index);
   updateCarousel();
@@ -125,6 +141,7 @@ function openLightbox(image) {
   lightboxImage.alt = image.alt;
   lightbox.classList.add("is-open");
   lightbox.setAttribute("aria-hidden", "false");
+  document.body.classList.add("is-lightbox-open");
 }
 
 function closeLightbox() {
@@ -132,6 +149,7 @@ function closeLightbox() {
   lightbox.setAttribute("aria-hidden", "true");
   lightboxImage.src = "";
   lightboxImage.alt = "";
+  document.body.classList.remove("is-lightbox-open");
 }
 
 function setupLightbox() {
