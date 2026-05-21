@@ -22,6 +22,8 @@ const groupCarouselTrack = document.querySelector("#groupCarouselTrack");
 const lightbox = document.querySelector("#imageLightbox");
 const lightboxImage = document.querySelector("#lightboxImage");
 const lightboxClose = document.querySelector("#lightboxClose");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let musicFadeFrame;
 
 function updateMusicButton(isPlaying) {
   musicButton.setAttribute("aria-pressed", String(isPlaying));
@@ -29,11 +31,41 @@ function updateMusicButton(isPlaying) {
   musicButtonText.textContent = isPlaying ? "Pausar musica" : "Tocar musica";
 }
 
+function fadeMusic(targetVolume, onComplete) {
+  cancelAnimationFrame(musicFadeFrame);
+
+  if (prefersReducedMotion) {
+    music.volume = targetVolume;
+    onComplete?.();
+    return;
+  }
+
+  const startVolume = music.volume;
+  const duration = 650;
+  const startedAt = performance.now();
+
+  function tick(now) {
+    const progress = Math.min((now - startedAt) / duration, 1);
+    music.volume = startVolume + (targetVolume - startVolume) * progress;
+
+    if (progress < 1) {
+      musicFadeFrame = requestAnimationFrame(tick);
+      return;
+    }
+
+    onComplete?.();
+  }
+
+  musicFadeFrame = requestAnimationFrame(tick);
+}
+
 musicButton.addEventListener("click", async () => {
   if (music.paused) {
     try {
+      music.volume = 0;
       await music.play();
       updateMusicButton(true);
+      fadeMusic(1);
     } catch {
       updateMusicButton(false);
     }
@@ -41,8 +73,10 @@ musicButton.addEventListener("click", async () => {
     return;
   }
 
-  music.pause();
   updateMusicButton(false);
+  fadeMusic(0, () => {
+    music.pause();
+  });
 });
 
 music.addEventListener("ended", () => updateMusicButton(false));
@@ -82,7 +116,9 @@ function setupCarousel(carousel, index) {
   const track = carousel.querySelector(".friend-carousel__track");
   const slides = Array.from(carousel.querySelectorAll(".friend-carousel__slide"));
   const friendName = carousel.closest(".friend-message")?.querySelector("strong")?.textContent || "grupo";
+  const shouldAutoplay = carousel.id === "groupCarousel" && !prefersReducedMotion;
   let currentSlide = 0;
+  let autoplayTimer;
 
   if (!track || slides.length <= 1) {
     carousel.dataset.carousel = String(index);
@@ -101,6 +137,7 @@ function setupCarousel(carousel, index) {
     dot.addEventListener("click", () => {
       currentSlide = slideIndex;
       updateCarousel();
+      restartAutoplay();
     });
     return dot;
   });
@@ -119,21 +156,52 @@ function setupCarousel(carousel, index) {
     });
   }
 
+  function stopAutoplay() {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = undefined;
+    }
+  }
+
+  function startAutoplay() {
+    if (!shouldAutoplay || autoplayTimer) {
+      return;
+    }
+
+    autoplayTimer = setInterval(() => {
+      currentSlide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1;
+      updateCarousel();
+    }, 4200);
+  }
+
+  function restartAutoplay() {
+    stopAutoplay();
+    startAutoplay();
+  }
+
   previousButton.addEventListener("click", () => {
     currentSlide = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
     updateCarousel();
+    restartAutoplay();
   });
 
   nextButton.addEventListener("click", () => {
     currentSlide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1;
     updateCarousel();
+    restartAutoplay();
   });
+
+  carousel.addEventListener("mouseenter", stopAutoplay);
+  carousel.addEventListener("mouseleave", startAutoplay);
+  carousel.addEventListener("focusin", stopAutoplay);
+  carousel.addEventListener("focusout", startAutoplay);
 
   dots.append(...dotButtons);
   controls.append(previousButton, counter, nextButton, dots);
   carousel.append(controls);
   carousel.dataset.carousel = String(index);
   updateCarousel();
+  startAutoplay();
 }
 
 function openLightbox(image) {
@@ -180,6 +248,93 @@ function setupLightbox() {
   });
 }
 
+function createFloatingParticles() {
+  if (prefersReducedMotion) {
+    return;
+  }
+
+  const particleLayer = createElement("div", "floating-particles");
+  const particleCount = window.innerWidth < 768 ? 8 : 16;
+
+  for (let index = 0; index < particleCount; index += 1) {
+    const particle = createElement("span", "floating-particles__item");
+    particle.style.setProperty("--particle-x", `${Math.random() * 100}%`);
+    particle.style.setProperty("--particle-y", `${Math.random() * 100}%`);
+    particle.style.setProperty("--particle-size", `${6 + Math.random() * 12}px`);
+    particle.style.setProperty("--particle-delay", `${Math.random() * -12}s`);
+    particle.style.setProperty("--particle-duration", `${14 + Math.random() * 12}s`);
+    particleLayer.append(particle);
+  }
+
+  document.body.append(particleLayer);
+}
+
+function setupRevealAnimations() {
+  const revealElements = [
+    document.querySelector(".site-header .eyebrow"),
+    document.querySelector(".site-header h1"),
+    document.querySelector(".site-header > p:not(.eyebrow)"),
+    document.querySelector(".music-player"),
+    ...document.querySelectorAll(".messages-section, .group-section, .friend-message"),
+  ].filter(Boolean);
+
+  revealElements.forEach((element, index) => {
+    element.classList.add("reveal");
+    element.style.setProperty("--reveal-delay", `${Math.min(index * 45, 280)}ms`);
+  });
+
+  if (!("IntersectionObserver" in window) || prefersReducedMotion) {
+    revealElements.forEach((element) => element.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+  );
+
+  revealElements.forEach((element) => observer.observe(element));
+}
+
+function setupHeroParallax() {
+  if (prefersReducedMotion) {
+    return;
+  }
+
+  let ticking = false;
+
+  function updateParallax() {
+    const shift = Math.min(window.scrollY * 0.08, 28);
+    document.documentElement.style.setProperty("--hero-shift", `${shift}px`);
+    document.documentElement.style.setProperty("--hero-shift-soft", `${shift * 0.14}px`);
+    document.documentElement.style.setProperty("--hero-shift-inverse", `${shift * -0.45}px`);
+    ticking = false;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+
+  updateParallax();
+}
+
 buildGroupCarousel();
+createFloatingParticles();
 document.querySelectorAll(".friend-carousel").forEach(setupCarousel);
 setupLightbox();
+setupRevealAnimations();
+setupHeroParallax();
