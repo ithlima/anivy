@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aniversario da Yanna</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <p class="eyebrow">Aniversario da Yanna</p>
+    <h1>Hoje é o seu dia!</h1>
+    <p>
+      Um cantinho feito para guardar carinho, mensagens e memórias especiais.
+    </p>
+
+    <div class="music-player">
+      <audio id="birthdayMusic" src="musica_fundo.mp3" preload="none"></audio>
+      <button class="music-button" id="musicButton" type="button" aria-pressed="false">
+        <span class="music-button__icon" aria-hidden="true">
+          <svg class="music-icon music-icon--play" viewBox="0 0 24 24" focusable="false">
+            <path d="M8 5v14l11-7-11-7Z"></path>
+          </svg>
+          <svg class="music-icon music-icon--pause" viewBox="0 0 24 24" focusable="false">
+            <path d="M7 5h4v14H7z"></path>
+            <path d="M13 5h4v14h-4z"></path>
+          </svg>
+        </span>
+        <span class="music-button__text">Tocar musica</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="messages-section" id="mensagens" aria-labelledby="mensagens-title">
+      <div class="section-title">
+        <p class="eyebrow">Recados especiais</p>
+        <h2 id="mensagens-title">Mensagens e Memórias</h2>
+      </div>
+
+      <div class="messages-list">
+        <!--
+          MOLDE PARA ADICIONAR UM NOVO AMIGO:
+
+          <article class="friend-message">
+            <strong>Nome da pessoa</strong>
+            <p>Mensagem da pessoa.</p>
+
+            <div class="friend-carousel">
+              <div class="friend-carousel__viewport">
+                <div class="friend-carousel__track">
+                  <div class="friend-carousel__slide">
+                    <img src="imgs/foto1.jpg" alt="Nome da pessoa - foto 1">
+                  </div>
+                  <div class="friend-carousel__slide">
+                    <img src="imgs/foto2.jpg" alt="Nome da pessoa - foto 2">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        -->
+
+        <article class="friend-message">
+          <strong>Luanna</strong>
+          <p>
+            Como não ficar feliz pela vida de uma diva dessas? 💖
+
+            Ter você na minha vida é muito elite... papo reto viu! Agora a gente vai ter que ser amigas até ficar
+            veynhas e nossos filhos serão berts viu. Jurooo!
+
+            Que você possa viver todos os sonhos do Senhor pra sua vida, certeza que são fora da curva!!
+
+            Você tem uma aura absurda viu véyrrr! Te amooo
+
+            -De sua amiga vitalícia, Lulu💖
+          </p>
+
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgluana1.JPEG" alt="Luanna - foto 1">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgluana2.JPEG" alt="Luanna - foto 2">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgluana3.JPEG" alt="Luanna - foto 3">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgluana4.JPEG" alt="Luanna - foto 4">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgluana5.JPEG" alt="Luanna - foto 5">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="friend-message">
+          <strong>DumangaGroup</strong>
+          <p>
+            Yandra, sao tantas lembrancas boas que nao conseguimos contar todas.
+            Obrigado por ser uma printa especial em minha vida. Te amo muito,
+            feliz aniversauro!
+          </p>
+
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgdumanga1.jpeg" alt="DumangaGroup - foto 1">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="friend-message">
+          <strong>Lô</strong>
+          <p>Hoje é o dia de celebrar a pessoa incrível que tu é. Quero que tu saiba o quanto tua amizade é especial pra
+            mim e o quanto nossos momentos juntas fazem diferença na minha vida desde as conversas aleatórias, as
+            fofocas, as risadas sem sentido, os surtos, até os momentos em que uma sempre tenta cuidar da outra. Tu
+            virou uma das minhas pessoas favoritas no mundo.
+
+            Mesmo nas fases difíceis, tu sempre consegue trazer um conforto só teu. Obrigada por todas as memórias,
+            pelas loucuras, pelos conselhos e por ser essa menina tão única e cheia de luz.
+
+            Desejo que teu novo ciclo venha recheado de felicidade, amor, paz, conquistas e muitas realizações. Que
+            nunca te faltem motivos pra sorrir e pessoas que te façam tão bem quanto tu faz pros outros.
+
+            E independente de qualquer coisa, quero que tu lembre que eu sempre vou estar aqui por ti. Aproveita teu dia
+            do jeitinho que tu merece, te amo prikaaa! 🧡</p>
+
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imglora1.jpeg" alt="Lô - foto 1">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imglora2.jpeg" alt="Lô - foto 2">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imglora3.jpeg" alt="Lô - foto 3">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imglora4.jpeg" alt="Lô - foto 4">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imglora5.jpeg" alt="Lô - foto 5">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="friend-message">
+          <strong>Mary</strong>
+          <p>Parabéns amiga, que essa data se repita por muitos anos! Fico muito feliz de celebrar mais um aniversário
+            ao seu lado e que seja sempre assim, que nossa amizade dure até dps da vida! Te amo muito, feliz dia ❤️❤️
+            Ps: conte sempre comigo</p>
+
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgmary1.jpeg" alt="Mary - foto 1">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgmary2.jpeg" alt="Mary - foto 2">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="friend-message">
+          <strong>Mari</strong>
+          <p>Oi Ayna 🙄
+            Feliz Aniversário!! Te desejo as melhores coisas possíveis, que Deus te abençoe, que você possa realizar
+            todos os seus sonhos, seja feliz, aproveite seu dia, 30 anos não é pra qualquer um 👏🏿 . Que essa data se
+            repita por muitos anos, estamos sempre por aqui se precisar (espero que não precise), você é muito especial
+            pra nós 💖</p>
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgmari1.jpeg" alt="Mari - foto 1">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgmari2.jpeg" alt="Mari - foto 2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="friend-message">
+          <strong>Michelly</strong>
+          <p>Hoje só consigo agradecer a Deus pela sua vida e pela sua amizade. Você é um presente dEle na minha vida, e
+            estar com você é sempre muito especial. Obrigada por cada date, cada risada, pelos segredos compartilhados e
+            por tantas memórias que tenho ao seu lado. Que Deus continue abençoando seus caminhos, iluminando seus
+            sonhos e enchendo sua vida de amor, paz e felicidade. Você merece o mundo inteiro (Menos as coisas ruins
+            👍🏾)
+
+            Amo você, lindinha. 💖</p>
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgmichelly1.jpeg" alt="Michelly - foto 1">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="friend-message">
+          <strong>Lú</strong>
+          <p>Feliz Aniversário Yanna Maria❤️🎉🍾🥳 aqui quem ta falano é a gabiele o luiz morreu 😰
+            Muita saúde, paz, sucesso, prosperidade e tudo de bom que tem nesse mundo. Que esta data se repita anos e
+            anos, e que eu possa estar em todos eles, juntamente com pessoas que te amam. Que você continue sendo esta
+            amiga de todas as horas, seja resenhando ou tristonhando. É isso ai mermo, um beijo do luiz lindo e muito
+            amado do penedo ❤️ ai lovi iu</p>
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgluiz1.jpeg" alt="Lú - foto 1">
+                </div>
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgluiz2.jpeg" alt="Lú - foto 2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="friend-message">
+          <strong>Lê</strong>
+          <p>Parabéns prika postiça, que Deus possa lhe abençoar hoje e sempre. Continue sendo essa mulher de energia
+            leve e espontânea, que possamos construir mais memórias e vários banhos de cachoeira. Sucesso e paciência
+            pra aguentar os prikos!!! ❤️❤️❤️❤️</p>
+          <div class="friend-carousel">
+            <div class="friend-carousel__viewport">
+              <div class="friend-carousel__track">
+                <div class="friend-carousel__slide">
+                  <img src="imgs/imgleandra1.jpeg" alt="Lê - foto 1">
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="group-section" id="momentos-grupo" aria-labelledby="group-title">
+      <div class="section-title">
+        <p class="eyebrow">Fotos juntos</p>
+        <h2 id="group-title">Momentos do Grupo</h2>
+      </div>
+
+      <div class="group-carousel friend-carousel" id="groupCarousel" aria-label="Carrossel de fotos do grupo">
+        <div class="friend-carousel__viewport">
+          <div class="friend-carousel__track" id="groupCarouselTrack"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="imageLightbox" aria-hidden="true">
+    <button class="lightbox__close" id="lightboxClose" type="button" aria-label="Fechar imagem">x</button>
+    <img class="lightbox__image" id="lightboxImage" src="" alt="">
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
